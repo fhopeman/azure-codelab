@@ -4,6 +4,7 @@ set -e
 set -o pipefail
 
 BASEDIR=$(dirname "$0")
+MY_IP=$(curl ifconfig.co)
 
 if [ -z "${EXAMPLE_DIR}" ]; then
     echo "Please set environment variable EXAMPLE_DIR"
@@ -22,6 +23,7 @@ terraform init
 
 terraform plan \
   -var "teamName=${TEAM_NAME}" \
+  -var "myIp=${MY_IP}" \
   -out plan.out
 
 terraform apply plan.out
