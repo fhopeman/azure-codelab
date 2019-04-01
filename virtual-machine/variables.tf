@@ -10,3 +10,7 @@ variable "location" {
 variable "myIp" {
   type = "string"
 }
+
+variable "publicSshKeyPath" {
+  type = "string"
+}

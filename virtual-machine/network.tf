@@ -23,7 +23,7 @@ resource "azurerm_public_ip" "yocto" {
 }
 
 resource "azurerm_network_security_group" "yocto" {
-  name                = "codelab-${var.teamName}-securitygroup"
+  name                = "codelab-${var.teamName}-securityGroup"
   resource_group_name = "${azurerm_resource_group.yocto.name}"
   location            = "${var.location}"
 
@@ -37,5 +37,20 @@ resource "azurerm_network_security_group" "yocto" {
     destination_port_range     = "22"
     source_address_prefix      = "${var.myIp}"
     destination_address_prefix = "*"
+  }
+}
+
+resource "azurerm_network_interface" "yocto" {
+  name                = "codelab-${var.teamName}-networkInterface"
+  resource_group_name = "${azurerm_resource_group.yocto.name}"
+  location            = "${var.location}"
+
+  network_security_group_id = "${azurerm_network_security_group.yocto.id}"
+
+  ip_configuration {
+    name                          = "nicConfiguration"
+    subnet_id                     = "${azurerm_subnet.yocto.id}"
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = "${azurerm_public_ip.yocto.id}"
   }
 }

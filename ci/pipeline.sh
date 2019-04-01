@@ -14,6 +14,10 @@ if [ -z "${TEAM_NAME}" ]; then
     echo "Please set environment variable TEAM_NAME"
     exit 1
 fi
+if [ -z "${SSH_PUBLIC_KEY_PATH}" ]; then
+    echo "Please set environment variable SSH_PUBLIC_KEY_PATH"
+    exit 1
+fi
 
 
 ### Deploy ###
@@ -24,6 +28,7 @@ terraform init
 terraform plan \
   -var "teamName=${TEAM_NAME}" \
   -var "myIp=${MY_IP}" \
+  -var "publicSshKeyPath=${SSH_PUBLIC_KEY_PATH}" \
   -out plan.out
 
 terraform apply plan.out
