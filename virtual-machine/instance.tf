@@ -40,7 +40,7 @@ resource "azurerm_virtual_machine" "yocto" {
     disable_password_authentication = true
     ssh_keys {
       path     = "/home/azureuser/.ssh/authorized_keys"
-      key_data = "${file("${var.publicSshKeyPath}")}"
+      key_data = "${file("${var.sshPublicKeyPath}")}"
     }
   }
 

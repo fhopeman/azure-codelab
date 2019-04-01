@@ -27,6 +27,6 @@ terraform destroy \
   -auto-approve \
   -var "teamName=${TEAM_NAME}" \
   -var "myIp=${MY_IP}" \
-  -var "publicSshKeyPath=${SSH_PUBLIC_KEY_PATH}"
+  -var "sshPublicKeyPath=${SSH_PUBLIC_KEY_PATH}"
 
 popd > /dev/null

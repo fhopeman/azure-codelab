@@ -11,6 +11,6 @@ variable "myIp" {
   type = "string"
 }
 
-variable "publicSshKeyPath" {
+variable "sshPublicKeyPath" {
   type = "string"
 }
