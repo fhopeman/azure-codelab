@@ -34,6 +34,7 @@ resource "azurerm_virtual_machine" "yocto" {
   os_profile {
     computer_name  = "codelab-${var.teamName}"
     admin_username = "azureuser"
+    custom_data = "${file("../scripts/start-yocto.sh")}"
   }
 
   os_profile_linux_config {

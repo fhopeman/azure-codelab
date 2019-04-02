@@ -4,7 +4,7 @@ set -e
 set -o pipefail
 
 BASEDIR=$(dirname "$0")
-MY_IP=$(curl ifconfig.co)
+MY_IP=$(curl -4 ifconfig.co)
 
 if [ -z "${EXAMPLE_DIR}" ]; then
     echo "Please set environment variable EXAMPLE_DIR"
