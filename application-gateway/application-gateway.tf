@@ -59,4 +59,14 @@ resource "azurerm_application_gateway" "yocto" {
     protocol              = "Http"
     request_timeout       = 1
   }
+
+  probe {
+    name = "healthCheck"
+    pick_host_name_from_backend_http_settings = true
+    protocol = "Http"
+    path = "/health"
+    interval = 5
+    unhealthy_threshold = 3
+    timeout = 1
+  }
 }
