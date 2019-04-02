@@ -50,8 +50,6 @@ resource "azurerm_application_gateway" "yocto" {
 
   backend_address_pool {
     name = "${local.backend_address_pool_name}"
-    #ip_addresses = ["${element(azurerm_network_interface.yocto.*.private_ip_address, count.index)}"]
-    #ip_addresses = ["${azurerm_virtual_machine_scale_set.yocto.id}"]
   }
 
   backend_http_settings {
