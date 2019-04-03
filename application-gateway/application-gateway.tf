@@ -1,10 +1,11 @@
 locals {
-  backend_address_pool_name      = "${azurerm_virtual_network.yocto.name}-beap"
-  frontend_port_name             = "${azurerm_virtual_network.yocto.name}-feport"
-  frontend_ip_configuration_name = "${azurerm_virtual_network.yocto.name}-feip"
-  http_setting_name              = "${azurerm_virtual_network.yocto.name}-be-htst"
-  listener_name                  = "${azurerm_virtual_network.yocto.name}-httplstn"
-  request_routing_rule_name      = "${azurerm_virtual_network.yocto.name}-rqrt"
+  backend_address_pool_name      = "appgw-beap"
+  frontend_port_name             = "appgw-feport"
+  frontend_ip_configuration_name = "appgw-feip"
+  http_setting_name              = "appgw-be-htst"
+  listener_name                  = "appgw-httplstn"
+  request_routing_rule_name      = "appgw-rqrt"
+  ssl_certificate_name           = "appgw-selfSignedCertificate"
 }
 
 resource "azurerm_application_gateway" "yocto" {
@@ -25,7 +26,7 @@ resource "azurerm_application_gateway" "yocto" {
 
   frontend_port {
     name = "${local.frontend_port_name}"
-    port = 80
+    port = 443
   }
 
   frontend_ip_configuration {
@@ -37,7 +38,14 @@ resource "azurerm_application_gateway" "yocto" {
     name                           = "${local.listener_name}"
     frontend_ip_configuration_name = "${local.frontend_ip_configuration_name}"
     frontend_port_name             = "${local.frontend_port_name}"
-    protocol                       = "Http"
+    protocol                       = "Https"
+    ssl_certificate_name           = "${local.ssl_certificate_name}"
+  }
+
+  ssl_certificate {
+    name = "${local.ssl_certificate_name}"
+    data = "${file("../scripts/appgwcert.pfx")}"
+    password = ""
   }
 
   request_routing_rule {
